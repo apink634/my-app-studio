@@ -28,7 +28,7 @@ Available conversation context: this session's chat with the AI coach, plus my o
 - Keep decision: I asked for one revision: "i want there to be an actual dashboard when the user logs in instead of just a confirmation they are logged in." I chose a welcome with my username plus a members-only message. Saved pieces are parked. After the revision I said "keep it as is." My prediction "matched exactly" on the behavior.
 - Review: I reviewed these APP-002 excerpts on Fri Nov 6, 2026, about 10:15 AM Eastern, and told the coach "looks good".
 - Help/gaps: The coach wrote the accounts code, the three page templates and the style code, and drafted the members-only wording (which I can rewrite). I chose the expected behavior, the dashboard contents and the revision, and tested the pages myself. Local check gap: none; the full check passed on my laptop.
-- Evidence links / next step: [Issue #3](https://github.com/apink634/my-app-studio/issues/3); PR link in SPEC.md once opened. Next: PR, CI, merge, then APP-003.
+- Evidence links / next step: [Issue #3](https://github.com/apink634/my-app-studio/issues/3); [PR #4](https://github.com/apink634/my-app-studio/pull/4). Merged with CI green. Next: APP-003.
 
 ## APP-003
 

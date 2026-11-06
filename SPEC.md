@@ -7,8 +7,8 @@ actual evidence; pending is a valid state. Keep explanations/help in
 ## Current stage
 
 - **Current feature:** APP-002.
-- **Status:** APP-001 merged. APP-002 built and checked locally; PR, CI and merge pending.
-- **Next step:** Open the APP-002 PR, review CI, merge, then agree APP-003.
+- **Status:** APP-001 merged. APP-002 built, kept by the learner, and merged in PR #4 with CI green.
+- **Next step:** Agree APP-003, then build and check it.
 - **Implementation marker:** `studio.json` is at `implemented_through: 2`.
 
 This repository owns application code. Server/proxy changes and production
@@ -45,7 +45,7 @@ helpers; keep data local. New accounts cannot choose their role.
 |---|---|
 | Expected public/private behavior and account flow | Anonymous visitors cannot see the private dashboard; the server sends them to the login page. A visitor makes an account, logs in, and lands on a private member space that welcomes them by username and shows a members-only note. Logging out ends the session and returns to the homepage. |
 | Valid and rejected cases to demonstrate | Valid: signup with a username and a long-enough password, then login. Rejected: a password that is too short (seen in the browser); duplicate or invalid signup and wrong credentials are covered by the automated checks. |
-| Own issue / branch / PR | [Issue #3](https://github.com/apink634/my-app-studio/issues/3); branch `app-002-accounts`; PR: Pending |
+| Own issue / branch / PR | [Issue #3](https://github.com/apink634/my-app-studio/issues/3); branch `app-002-accounts`; [PR #4](https://github.com/apink634/my-app-studio/pull/4) |
 
 **Not in scope (parked ideas):** saved pieces on the dashboard, and the archive of past pieces. Both are new features for a later agreed scope.
 
@@ -86,7 +86,7 @@ customer research or claims that a timestamp proves learning.
 | Feature | Files / own issue / PR | Actual checks and learner observations | Kept / GitHub state |
 |---|---|---|---|
 | APP-001 | `app/brand.json`, `app/templates/home.html`, `app/static/logo.svg`, `app/static/site.css`, `app/static/art/cat.jpg`; [issue #1](https://github.com/apink634/my-app-studio/issues/1); [PR #2](https://github.com/apink634/my-app-studio/pull/2) | Local `check --lesson APP-001` on Windows first failed one foundation test (`test_revision_does_not_read_symlinked_private_file`, WinError 1314: Windows needs a privilege to create symlinks). After Windows Developer Mode was turned on, the full check passed, including real Chromium. CI: green. Learner observations: [LEARNING.md](LEARNING.md). | Kept; PR #2 merged, CI green |
-| APP-002 | `app/features/accounts.py`, `app/templates/signup.html`, `login.html`, `dashboard.html`, `app/static/site.css`, `studio.json`; [issue #3](https://github.com/apink634/my-app-studio/issues/3); PR: Pending | Local `check --lesson APP-002` on Windows passed in full, including real Chromium, and was re-run after the dashboard revision. Learner observations: [LEARNING.md](LEARNING.md). | Kept by the learner; PR and CI pending |
+| APP-002 | `app/features/accounts.py`, `app/templates/signup.html`, `login.html`, `dashboard.html`, `app/static/site.css`, `studio.json`; [issue #3](https://github.com/apink634/my-app-studio/issues/3); [PR #4](https://github.com/apink634/my-app-studio/pull/4) | Local `check --lesson APP-002` on Windows passed in full, including real Chromium, and was re-run after the dashboard revision. Learner observations: [LEARNING.md](LEARNING.md). | Kept; PR #4 merged, CI green |
 | APP-003 | Pending | Unfinished; explicit contracts not yet passed | Pending |
 
 The instructor's reference branches show possible implementations. They do not
