@@ -39,4 +39,4 @@ Available conversation context: this session's chat with the AI coach, plus my o
 - Keep decision: "lets keep this as it is, i like that it shows the username of who you are logged in as so you know whether or not is the right account for admin access. i still want to add the features for admins to be able to add photos later" (parked for a later scope).
 - Review: I reviewed these APP-003 excerpts on Fri Nov 6, 2026, about 11:06 AM Eastern, and told the coach "looks good".
 - Help/gaps: The coach wrote the admin route and page and explained the role command. I chose the admin page wording ("Only the curator of the gallery can see this page"), ran the role command myself, tested the member and admin views in my browser, and decided to keep it. Local check gap: none; the full check passed on my laptop.
-- Evidence links / next step: [Issue #6](https://github.com/apink634/my-app-studio/issues/6); PR link in SPEC.md once opened. Next: PR, CI, merge, then submit.
+- Evidence links / next step: [Issue #6](https://github.com/apink634/my-app-studio/issues/6); [PR #7](https://github.com/apink634/my-app-studio/pull/7). Next: CI, merge, then submit.
