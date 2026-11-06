@@ -1,16 +1,19 @@
 {
-  "name": "Your Project",
-  "audience": "Not chosen yet",
-  "archetype": "Not chosen yet",
-  "promise": "Not chosen yet",
-  "headline": "A small idea. A real application.",
-  "summary": "This working page is your starting point. Give it a purpose and a brand, then build accounts and permissions one feature at a time.",
-  "voice": ["Not chosen yet"],
-  "design_direction": "Not chosen yet",
+  "name": "MiniGallery",
+  "audience": "A bored student in class looking for something to do.",
+  "archetype": "Explorer, with a little Jester",
+  "promise": "Something more interesting to look at instead of zoning out in class.",
+  "headline": "Zoned out?\nLook at this instead.",
+  "summary": "A tiny gallery for the back row. One interesting thing to look at, right now.",
+  "voice": [
+    "Curious",
+    "Playful"
+  ],
+  "design_direction": "Gallery-wall calm with a cheeky twist: lots of white space, one bold color, the art comes first.",
   "palette": {
-    "ink": "#182C34",
-    "paper": "#F6F5EF",
-    "accent": "#285A50",
+    "ink": "#1B1B2F",
+    "paper": "#FAF7F2",
+    "accent": "#C2410C",
     "surface": "#FFFFFF"
   }
 }
