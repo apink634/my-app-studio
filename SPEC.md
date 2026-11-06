@@ -6,10 +6,10 @@ actual evidence; pending is a valid state. Keep explanations/help in
 
 ## Current stage
 
-- **Current feature:** APP-002.
-- **Status:** APP-001 merged. APP-002 built, kept by the learner, and merged in PR #4 with CI green.
-- **Next step:** Agree APP-003, then build and check it.
-- **Implementation marker:** `studio.json` is at `implemented_through: 2`.
+- **Current feature:** APP-003.
+- **Status:** APP-001 and APP-002 merged. APP-003 built and checked locally; PR, CI and merge pending.
+- **Next step:** Open the APP-003 PR, review CI, merge, then submit.
+- **Implementation marker:** `studio.json` is at `implemented_through: 3`.
 
 This repository owns application code. Server/proxy changes and production
 deployment are outside these three local-development lessons. Prepared helpers
@@ -69,9 +69,11 @@ permissions, including for an existing session after a role change.
 
 | Decision | Agreement |
 |---|---|
-| Intended admin-only result | Pending |
-| Actual allowed/denied request evidence | Pending |
-| Own issue / branch / PR | Pending |
+| Intended admin-only result | An admin sees an "Administration" page that says "Only the curator of the gallery can see this page." Members get "Admin access required" (403) and anonymous visitors are sent to the login page. |
+| Actual allowed/denied request evidence | Direct `/api/admin` request: anonymous 401, member 403, admin 200 (automated checks). In my browser: as a member `/admin` said "Admin access required"; after the trusted terminal command made me an admin, a refresh showed "Administration". |
+| Own issue / branch / PR | [Issue #6](https://github.com/apink634/my-app-studio/issues/6); branch `app-003-roles`; PR: Pending |
+
+**Not in scope (parked idea):** admin tools for adding the new daily gallery photo. It is a new feature, so it waits for a later agreed scope.
 
 **Keep when:** a direct request cannot bypass the role boundary, role changes
 take effect as specified, new signup remains member-only, and full cumulative
@@ -87,7 +89,7 @@ customer research or claims that a timestamp proves learning.
 |---|---|---|---|
 | APP-001 | `app/brand.json`, `app/templates/home.html`, `app/static/logo.svg`, `app/static/site.css`, `app/static/art/cat.jpg`; [issue #1](https://github.com/apink634/my-app-studio/issues/1); [PR #2](https://github.com/apink634/my-app-studio/pull/2) | Local `check --lesson APP-001` on Windows first failed one foundation test (`test_revision_does_not_read_symlinked_private_file`, WinError 1314: Windows needs a privilege to create symlinks). After Windows Developer Mode was turned on, the full check passed, including real Chromium. CI: green. Learner observations: [LEARNING.md](LEARNING.md). | Kept; PR #2 merged, CI green |
 | APP-002 | `app/features/accounts.py`, `app/templates/signup.html`, `login.html`, `dashboard.html`, `app/static/site.css`, `studio.json`; [issue #3](https://github.com/apink634/my-app-studio/issues/3); [PR #4](https://github.com/apink634/my-app-studio/pull/4) | Local `check --lesson APP-002` on Windows passed in full, including real Chromium, and was re-run after the dashboard revision. Learner observations: [LEARNING.md](LEARNING.md). | Kept; PR #4 merged, CI green |
-| APP-003 | Pending | Unfinished; explicit contracts not yet passed | Pending |
+| APP-003 | `app/features/roles.py`, `app/templates/admin.html`, `studio.json`; [issue #6](https://github.com/apink634/my-app-studio/issues/6); PR: Pending | Local `check --lesson APP-003` on Windows passed in full, including real Chromium (96 foundation, 18 contracts, 2 Chromium). Learner observations: [LEARNING.md](LEARNING.md). | Kept by the learner; PR and CI pending |
 
 The instructor's reference branches show possible implementations. They do not
 establish this repository's completion or the learner's own reasoning.
