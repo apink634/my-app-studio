@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ "Administration" if allowed else "Admin access required" }} · {{ brand.name }}{% endblock %}
+{% block content %}
+<section class="member-space" aria-labelledby="admin-title">
+  {% if allowed %}
+  <p class="eyebrow">Curator only</p>
+  <h1 id="admin-title">Administration</h1>
+  <div class="panel member-note">
+    <p>Only the curator of the gallery can see this page.</p>
+  </div>
+  {% else %}
+  <p class="eyebrow">Forbidden</p>
+  <h1 id="admin-title">Admin access required</h1>
+  <div class="panel member-note">
+    <p>You are logged in as <strong>{{ user.username }}</strong>, but this page is only for the gallery curator.</p>
+  </div>
+  {% endif %}
+  <a class="button" href="/dashboard">Back to your member space</a>
+</section>
+{% endblock %}

@@ -32,10 +32,11 @@ Available conversation context: this session's chat with the AI coach, plus my o
 
 ## APP-003
 
-- Prediction: Pending.
-- Check interpretation: Pending.
-- Browser observation: Pending.
-- Keep decision: Pending.
-- Review: Pending.
-- Help/gaps: Pending.
-- Evidence links / next step: Keep APP-002 before agreeing this lesson.
+- Prediction: "the server would check if the account is registered as an admin."
+- Check interpretation: Check shown: a logged-in member requests `/api/admin` directly and gets 403. In my words: "It would catch a security bug since it makes sure only authorised users have access to sensitive pages."
+- Browser observation: As a member: "it says: admin access required and tells me that i am logged in as ann". After the trusted terminal command made me an admin and I refreshed: "now it shows me the administration page and says only curator can see the page".
+- Coach note (not my observation): the server answers 401 to anonymous visitors, 403 to members and 200 to admins, and it reads my role from the database on every request, so the change showed up without logging in again.
+- Keep decision: "lets keep this as it is, i like that it shows the username of who you are logged in as so you know whether or not is the right account for admin access. i still want to add the features for admins to be able to add photos later" (parked for a later scope).
+- Review: I reviewed these APP-003 excerpts on Fri Nov 6, 2026, about 11:06 AM Eastern, and told the coach "looks good".
+- Help/gaps: The coach wrote the admin route and page and explained the role command. I chose the admin page wording ("Only the curator of the gallery can see this page"), ran the role command myself, tested the member and admin views in my browser, and decided to keep it. Local check gap: none; the full check passed on my laptop.
+- Evidence links / next step: [Issue #6](https://github.com/apink634/my-app-studio/issues/6); PR link in SPEC.md once opened. Next: PR, CI, merge, then submit.
