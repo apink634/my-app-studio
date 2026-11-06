@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Member space · {{ brand.name }}{% endblock %}
+{% block content %}
+<section class="member-space" aria-labelledby="dashboard-title">
+  <p class="eyebrow">Members only</p>
+  <h1 id="dashboard-title">Your member space</h1>
+  <p class="lede">Welcome back, <strong>{{ user.username }}</strong>.</p>
+  <div class="panel member-note">
+    <p class="eyebrow">A note for members</p>
+    <h2>You are on the members-only side of the gallery.</h2>
+    <p>Psst, back-row explorer: this page only appears when you are logged in. Nothing is hanging in here yet, but the wall is reserved for you.</p>
+  </div>
+  <form method="post" action="/logout">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <button class="button" type="submit">Log out</button>
+  </form>
+</section>
+{% endblock %}
