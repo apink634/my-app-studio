@@ -383,3 +383,49 @@ def test_groq_waits_and_retries_when_rate_limited(monkeypatch):
     monkeypatch.setattr(providers.time, "sleep", lambda seconds: None)
     assert providers.GroqChat(api_key="test-key").complete([]) == "ok"
     assert len(sent) == 2
+
+
+def test_groq_retries_without_json_check_when_groq_rejects_the_json(monkeypatch):
+    from app.rag import providers  # pylint: disable=import-outside-toplevel
+
+    bodies = []
+    replies = [
+        providers.httpx.Response(400, json={"error": {"code": "json_validate_failed"}}),
+        providers.httpx.Response(
+            200, json={"choices": [{"message": {"content": "{}"}}]}
+        ),
+    ]
+
+    def fake_post(url, **kwargs):
+        bodies.append(kwargs["json"])
+        response = replies.pop(0)
+        response.request = providers.httpx.Request("POST", url)
+        return response
+
+    monkeypatch.setattr(providers.httpx, "post", fake_post)
+    assert providers.GroqChat(api_key="k").complete([], json_mode=True) == "{}"
+    assert "response_format" in bodies[0] and "response_format" not in bodies[1]
+
+
+def test_one_failing_chunk_does_not_stop_graph_extraction(settings):
+    database.initialize(settings)
+    store.initialize(settings)
+    run_import(settings)
+
+    class FailsOnce(FakeModel):
+        def complete(self, messages, json_mode=False):
+            if not self.calls:
+                self.calls.append(1)
+                request = graph.httpx.Request("POST", "https://api.groq.com")
+                raise graph.httpx.HTTPStatusError(
+                    "bad",
+                    request=request,
+                    response=graph.httpx.Response(400, request=request),
+                )
+            return '{"relationships": []}'
+
+    report = graph.extract(settings, FailsOnce())
+    assert report[0]["error"] == 400
+    assert all("kept" in row for row in report[1:])
+    retry = graph.extract(settings, FakeModel('{"relationships": []}'))
+    assert [row["chunk"] for row in retry] == [report[0]["chunk"]]

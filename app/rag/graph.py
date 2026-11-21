@@ -9,6 +9,8 @@ AI extraction can invent links that the source never states.
 import json
 import re
 
+import httpx
+
 from app.rag import store
 from app.rag.providers import ChatModel
 from app.settings import Settings
@@ -88,17 +90,25 @@ def extract(settings: Settings, model: ChatModel) -> list[dict]:
     """Run extraction for every chunk that has not been processed yet."""
     report = []
     for row in store.chunks_without_graph(settings):
-        reply = model.complete(
-            [
-                {
-                    "role": "user",
-                    "content": PROMPT.format(
-                        relations=", ".join(sorted(RELATIONS)), passage=row["text"]
-                    ),
-                }
-            ],
-            json_mode=True,
-        )
+        try:
+            reply = model.complete(
+                [
+                    {
+                        "role": "user",
+                        "content": PROMPT.format(
+                            relations=", ".join(sorted(RELATIONS)),
+                            passage=row["text"],
+                        ),
+                    }
+                ],
+                json_mode=True,
+            )
+        except httpx.HTTPError as error:
+            # Skip this chunk without recording a run, so the next
+            # `graph` command tries it again. The error never includes the key.
+            status = getattr(getattr(error, "response", None), "status_code", None)
+            report.append({"chunk": row["id"], "error": status or type(error).__name__})
+            continue
         candidates = parse_reply(reply)
         kept = []
         for candidate in candidates:

@@ -83,6 +83,10 @@ class GroqChat:
                 break
             # Free tier: 30 requests/minute. Wait as long as Groq asks, then retry.
             time.sleep(min(float(response.headers.get("retry-after", 5)), 30))
+        if json_mode and response.status_code == 400:
+            # Groq answers 400 when the model's reply fails its JSON check.
+            # Ask again without the check; callers pull the JSON out of text.
+            return self.complete(messages, json_mode=False)
         response.raise_for_status()
         return response.json()["choices"][0]["message"]["content"] or ""
 
