@@ -8,3 +8,15 @@
 @media(max-width:650px){.hero-grid{grid-template-columns:1fr;gap:28px;padding-block:32px}.piece-wrap{order:-1}.hero-copy h1{max-width:none}}
 .form-stack h1{font-size:clamp(2rem,5vw,3rem);max-width:none;margin-bottom:16px}.form-stack .button{width:100%;justify-content:center}.form-stack p{margin-block:12px}
 .member-space{max-width:760px;padding-block:56px 72px}.member-space h1{font-size:clamp(2rem,5vw,3.2rem);max-width:none;margin-bottom:12px}.member-note{margin-block:28px 36px}.member-note h2{font-size:clamp(1.4rem,3vw,1.9rem);max-width:none;margin-bottom:14px}
+
+/* Individual RAG app */
+.rag-form { display: grid; gap: 0.5rem; max-width: 40rem; margin: 1.5rem 0; }
+.rag-text { white-space: pre-line; }
+.rag-list { display: grid; gap: 1rem; padding-left: 1.25rem; }
+.rag-context { white-space: pre-wrap; overflow-x: auto; font-size: 0.85rem; }
+.rag-table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+.rag-table th, .rag-table td { border-bottom: 1px solid currentColor; padding: 0.4rem; text-align: left; vertical-align: top; }
+.rag-credit { font-size: 0.9rem; }
+.rag-form input{width:100%;padding:12px;border:1px solid var(--ink);border-radius:5px;background:var(--paper);color:var(--ink)}
+.rag-form label{font-weight:650}
+.rag-form .button{justify-self:start}

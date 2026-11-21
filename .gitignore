@@ -14,3 +14,6 @@ playwright-report/
 *.sqlite-*
 *.db
 *.db-*
+
+# RAG deployment secrets and compose variables stay on the server
+deploy/rag.env

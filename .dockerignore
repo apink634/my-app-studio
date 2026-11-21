@@ -1,0 +1,10 @@
+.git
+.venv
+runtime
+test-results
+**/__pycache__
+.env*
+docs
+tests
+contracts
+deploy/rag.env

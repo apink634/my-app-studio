@@ -1,0 +1,10 @@
+{
+  "permission": "MedlinePlus health topic summaries are public domain (https://medlineplus.gov/copyright.html, checked 2026-11-17). Source: MedlinePlus, National Library of Medicine.",
+  "sources": [
+    {"id": "mlp-diabetes", "title": "Diabetes", "url": "https://medlineplus.gov/diabetes.html"},
+    {"id": "mlp-diabetes-type-1", "title": "Diabetes Type 1", "url": "https://medlineplus.gov/diabetestype1.html"},
+    {"id": "mlp-diabetes-type-2", "title": "Diabetes Type 2", "url": "https://medlineplus.gov/diabetestype2.html"},
+    {"id": "mlp-diabetes-complications", "title": "Diabetes Complications", "url": "https://medlineplus.gov/diabetescomplications.html"},
+    {"id": "mlp-high-blood-sugar", "title": "High Blood Sugar", "url": "https://medlineplus.gov/hyperglycemia.html"}
+  ]
+}
