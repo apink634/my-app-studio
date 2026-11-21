@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Imported sources · {{ brand.name }}{% endblock %}
+{% block content %}
+<section class="rag" aria-labelledby="sources-title">
+  <p class="eyebrow">Import record</p>
+  <h1 id="sources-title">Imported MedlinePlus sources</h1>
+  {% if not sources %}
+  <p class="panel">No sources have been imported yet. Import runs from the trusted command line: <code>python -m app.rag import</code>.</p>
+  {% else %}
+  <table class="rag-table">
+    <thead><tr><th scope="col">Source id</th><th scope="col">Page</th><th scope="col">Chunks</th><th scope="col">Graph edges kept</th><th scope="col">Edges rejected</th><th scope="col">Content hash</th></tr></thead>
+    <tbody>
+      {% for source in sources %}
+      <tr><td><code>{{ source.id }}</code></td><td><a href="{{ source.url }}">{{ source.title }}</a></td><td>{{ source.chunks }}</td><td>{{ source.edges }}</td><td>{{ source.rejected_edges }}</td><td><code>{{ source.content_hash[:12] }}</code></td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p>Permission: {{ sources[0].permission }}</p>
+  {% endif %}
+  {% if sample %}
+  <h2>Sample representation</h2>
+  <div class="panel">
+    <p><strong>Chunk</strong> <code>{{ sample.id }}</code> from <a href="{{ sample.url }}">{{ sample.title }}</a></p>
+    <p class="rag-text">{{ sample.text }}</p>
+    <p><strong>Embedding:</strong> {{ dimensions }} numbers from <code>{{ sample.embed_model }}</code>. First eight: <code>{{ preview|join(", ") }}</code> …</p>
+  </div>
+  {% endif %}
+  {% if edges %}
+  <h2>Sample graph edges</h2>
+  <ul class="rag-list">
+    {% for edge in edges %}
+    <li>{{ edge.subject }} → {{ edge.relation|replace("_", " ") }} → {{ edge.object }} · “{{ edge.evidence }}” · <a href="{{ edge.url }}">{{ edge.title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <p><a href="/rag">Back to the question page</a></p>
+</section>
+{% endblock %}

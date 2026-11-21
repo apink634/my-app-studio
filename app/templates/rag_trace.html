@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Answer trace · {{ brand.name }}{% endblock %}
+{% block content %}
+{% set trace = record.trace %}
+<section class="rag" aria-labelledby="trace-title">
+  <p class="eyebrow">Answer trace · outcome: {{ record.outcome }}</p>
+  <h1 id="trace-title">{{ record.question }}</h1>
+  <div class="panel rag-answer">
+    <h2>Answer</h2>
+    <p class="rag-text">{{ record.answer }}</p>
+    {% if trace.citations %}
+    <p>Cited: {{ trace.citations.cited|join(", ") or "none" }}{% if trace.citations.unknown %} · <strong>cited ids that don't exist: {{ trace.citations.unknown|join(", ") }}</strong>{% endif %}</p>
+    {% endif %}
+    <p class="rag-credit">Not medical advice. Source: MedlinePlus, National Library of Medicine.</p>
+  </div>
+  {% if trace.guard %}<p class="panel"><strong>Stopped before the model:</strong> {{ trace.guard }}</p>{% endif %}
+  {% if trace.passages %}
+  <h2>Retrieved passages (vector search)</h2>
+  <ol class="rag-list">
+    {% for passage in trace.passages %}
+    <li><p><strong>S{{ loop.index }}</strong> · score {{ passage.score }} · <a href="{{ passage.url }}">{{ passage.title }}</a> · <code>{{ passage.id }}</code></p>
+      <p class="rag-text">{{ passage.text }}</p></li>
+    {% endfor %}
+  </ol>
+  {% endif %}
+  {% if trace.facts %}
+  <h2>Connected facts (graph)</h2>
+  <ol class="rag-list">
+    {% for fact in trace.facts %}
+    <li><p><strong>G{{ loop.index }}</strong> · {{ fact.subject }} → {{ fact.relation|replace("_", " ") }} → {{ fact.object }} · found via {{ fact.via }} · <a href="{{ fact.url }}">{{ fact.title }}</a></p>
+      <p class="rag-text">Evidence: “{{ fact.evidence }}” (<code>{{ fact.chunk_id }}</code>)</p></li>
+    {% endfor %}
+  </ol>
+  {% endif %}
+  <details>
+    <summary>Exact text sent to the model</summary>
+    <p>Embedding model: <code>{{ trace.embed_model }}</code> · Chat model: <code>{{ trace.chat_model or "not called" }}</code> · Minimum score: {{ trace.min_score }}</p>
+    {% if trace.context %}<pre class="rag-context">{{ trace.context }}</pre>{% endif %}
+  </details>
+  <p><a class="button" href="/rag">Ask another question</a></p>
+</section>
+{% endblock %}

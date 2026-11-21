@@ -1,0 +1,2 @@
+# Extra runtime packages for the individual RAG app (installed in the container).
+fastembed==0.9.1

@@ -1,0 +1,27 @@
+# Runs the RAG app behind the server's EXISTING Traefik (no new proxy, no host ports).
+# Settings come from deploy/rag.env, which is ignored by Git and holds the secrets.
+services:
+  rag:
+    build: .
+    image: my-app-studio-rag:local
+    restart: unless-stopped
+    env_file: deploy/rag.env
+    volumes:
+      - rag-data:/data
+    networks:
+      - hosting
+    labels:
+      traefik.enable: 'true'
+      traefik.docker.network: ${TRAEFIK_NETWORK:-hosting-web}
+      traefik.http.routers.rag.rule: Host(`${APP_HOST:?Set APP_HOST in .env}`)
+      traefik.http.routers.rag.entrypoints: websecure
+      traefik.http.routers.rag.service: rag
+      traefik.http.services.rag.loadbalancer.server.port: '8000'
+
+volumes:
+  rag-data:
+
+networks:
+  hosting:
+    external: true
+    name: ${TRAEFIK_NETWORK:-hosting-web}

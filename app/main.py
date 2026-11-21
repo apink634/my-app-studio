@@ -12,7 +12,9 @@ from fastapi.templating import Jinja2Templates
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from app import branding, database, security
-from app.features import accounts, roles
+from app.features import accounts, rag, roles
+from app.rag import providers
+from app.rag import store as rag_store
 from app.settings import Settings
 from studio_tools.live import revision as current_revision
 
@@ -23,6 +25,7 @@ def create_app(settings=None):
     """Create an isolated testable app; no test uses the learner's real database."""
     settings = settings or Settings.load()
     database.initialize(settings)
+    rag_store.initialize(settings)
     application = FastAPI(title="IS373 App Studio", docs_url=None, redoc_url=None)
     application.add_middleware(
         TrustedHostMiddleware,
@@ -38,6 +41,14 @@ def create_app(settings=None):
     )
     application.include_router(accounts.router)
     application.include_router(roles.router)
+    application.include_router(rag.router)
+    # Real providers are built on first use; tests swap in fakes.
+    application.state.rag_factory = {
+        "embedder": providers.FastEmbedder,
+        "model": providers.groq_from_environment,
+    }
+    application.state.rag_embedder = None
+    application.state.rag_model = None
     application.state.feature_flags = lambda: {
         "accounts": any(route.path == "/api/me" for route in accounts.router.routes),
         "roles": any(route.path == "/api/admin" for route in roles.router.routes),

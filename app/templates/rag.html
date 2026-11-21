@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Diabetes source search · {{ brand.name }}{% endblock %}
+{% block content %}
+<section class="rag" aria-labelledby="rag-title">
+  <p class="eyebrow">Individual RAG app · Build stage</p>
+  <h1 id="rag-title">Ask about diabetes, answered from MedlinePlus</h1>
+  <p class="lede">Every answer is written only from MedlinePlus diabetes summaries and shows the passages and facts it used.</p>
+  <div class="panel rag-limits">
+    <h2>Before you ask</h2>
+    <ul>
+      <li><strong>Not medical advice.</strong> This app can't diagnose you. In an emergency, call 911.</li>
+      <li>It only knows {{ sources|length }} MedlinePlus pages. If they don't cover your question, it says so.</li>
+      <li>Answers are written by an AI model and can still be wrong. Open the cited source to check.</li>
+    </ul>
+    <p><a href="/rag/sources">See the imported sources and how they're stored</a></p>
+  </div>
+  {% if error %}<p class="form-error" role="alert">{{ error }}</p>{% endif %}
+  {% if user %}
+  <form method="post" action="/rag/ask" class="rag-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label for="question">Your question</label>
+    <input id="question" name="question" type="text" required minlength="3" maxlength="300" placeholder="What are common diabetes symptoms?">
+    <button class="button" type="submit">Ask</button>
+  </form>
+  {% else %}
+  <p><a class="button" href="/login">Log in to ask a question</a> · <a href="/signup">Create an account</a></p>
+  {% endif %}
+  <p class="rag-credit">Source: MedlinePlus, National Library of Medicine.</p>
+</section>
+{% endblock %}
